@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
-        android:text="@string/chat_noir" >
+        android:text="@string/chat_noir"
+        android:background="@drawable/bbuton_primary_rounded"
+         >
     </Button>
         <Button
         android:id="@+id/tacoyaki"
@@ -21,7 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
-        android:text="@string/tacoyaki" >
+        android:text="@string/tacoyaki" 
+        android:background="@drawable/bbuton_primary_rounded"
+        >
     </Button>
 
 
@@ -31,7 +35,9 @@
         android:layout_height="48dp"
         android:layout_below="@id/chat_noir"
         android:layout_marginTop="10dp"
-        android:text="@string/game_about" >
+        android:text="@string/game_about"
+        android:background="@drawable/bbuton_primary_rounded"
+         >
     </Button>
 
 </RelativeLayout>

@@ -44,12 +44,13 @@ public class Game {
 		this.mGameHeight = height;
 		this.mGameMap = new int[mGameHeight][mGameWidth];
 		this.mGameMap[mGameHeight / 2][mGameWidth / 2] = GameConfig.TYPE_CAT;
-		this.ai = new AiCat(mGameMap);
+		this.ai = new AiCat(mGameMap);  
 		mActions = new LinkedList<Coordinate>();
 		catPos = new Coordinate(mGameHeight/2, mGameWidth/2);
 		obstacleCircleInit();
 	}
-
+	
+	// getters
 	public void setMode(int mode) {
 		this.mode = mode;
 	}
@@ -135,8 +136,8 @@ public class Game {
 			playerSteps++;
 			mActions.add(new Coordinate(x, y));
 
-			ai.updateGameMap(mGameMap);
-			Coordinate newPos = ai.getNextPos();
+			ai.updateGameMap(mGameMap); // cat's turn
+			Coordinate newPos = ai.getNextPos();// cat's new position
 			
 			switch(newPos.x){
 			case GameConfig.WIN:

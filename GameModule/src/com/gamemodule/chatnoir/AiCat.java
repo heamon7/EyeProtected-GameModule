@@ -1,3 +1,9 @@
+/*
+ * author: Also wu
+ * 
+ * using BFS to find the way out
+ */
+
 package com.gamemodule.chatnoir;
 
 import java.util.LinkedList;
@@ -8,9 +14,6 @@ public class AiCat {
 
 	private final static String TAG = "AI_CAT";
 	private int[][] gameMap;
-	private Coordinate lastStep = null;
-
-
 
 	public AiCat() {
 	}
@@ -25,19 +28,23 @@ public class AiCat {
 		this.gameMap = map;
 	}
 
+	
 	public Coordinate getNextPos() {
 		Coordinate cpos = getCatPos();
 		if (cpos == null) {
 			return null;
 		}
-
+		// @return (-1, -1) user win
+		//         (-2, -2) cat win
+		//         or next position
 		return findPath(cpos);
 	}
 
 	
 
+	// BFS search
 	private Coordinate findPath(Coordinate cpos) {
-
+		// check pos's legality
 		if (cpos.x == 0 || cpos.x == gameMap.length - 1 || cpos.y == 0
 				|| cpos.y == gameMap[0].length - 1) {
 			return new Coordinate(GameConfig.LOSE, GameConfig.LOSE);
@@ -45,13 +52,11 @@ public class AiCat {
 		
 	    LinkedList<Coordinate> posList = new LinkedList<Coordinate>();
 	    boolean[][] visited = new boolean[gameMap.length][gameMap[0].length];
-		boolean flag = false;
 		
 		visited[cpos.x][cpos.y] = true; 
 		
 		posList.add(cpos);
 		while(!posList.isEmpty()){
-			Log.d(TAG, "poslist size: "+ posList.size());
 			Coordinate curr = posList.removeFirst();
 			LinkedList<Coordinate> neighbor = getNeighbor(curr);
 			// check neighbors
@@ -59,23 +64,24 @@ public class AiCat {
 				Coordinate tmp = (Coordinate) neighbor.get(i);
 				if(!checkPos(tmp)) continue;
 				if(gameMap[tmp.x][tmp.y] == GameConfig.TYPE_OBSTACLE) continue; 
+				// 如果邻接点为出口，则寻找路径中第一个点
 				if(isDest(tmp) && gameMap[tmp.x][tmp.y] == GameConfig.TYPE_EMPTY){
 					tmp.setParent(curr);
 					return getFirstStep(cpos, tmp);
 				}
 				
+				// 邻接点未访问过，且可以使用则放入list 并设为已访问
 				if(visited[tmp.x][tmp.y] == false && gameMap[tmp.x][tmp.y] == GameConfig.TYPE_EMPTY){
-					visited[tmp.x][tmp.y] = true; 
+					visited[tmp.x][tmp.y] = true;  // DO NOT forget this
 					tmp.setParent(curr);
 					posList.add(tmp);
 				}
 			}
 		}// while
 		
-		if(flag) return lastStep;
-		
+		// there is actually no way out but still can move
+		// check neighbor points 
 		Log.d(TAG, "almost catched!");
-		////////////////////////////////////////////////////////////////
 		LinkedList<Coordinate> neighbor = getNeighbor(cpos);
 		// check neighbors
 		for(int i = 0; i < neighbor.size(); i++){
@@ -84,9 +90,9 @@ public class AiCat {
 				return tmp;
 			}
 		}// for
-		return new Coordinate(GameConfig.WIN, GameConfig.WIN);
-		//////////////////////////////////////////////////////////////
 		
+		// the cat has been XXXXed
+		return new Coordinate(GameConfig.WIN, GameConfig.WIN);
 	}
 	
 	private LinkedList<Coordinate> getNeighbor(Coordinate center) {
@@ -108,7 +114,6 @@ public class AiCat {
 	private Coordinate getFirstStep(Coordinate start, Coordinate last){
 		while(last.parent != null){
 			if(last.parent.x == start.x && last.parent.y == start.y){
-				Log.d(TAG, "nextstep: "+last.x+ " Y:"+last.y);
 				return last;
 			}
 			last = last.parent;
@@ -150,5 +155,3 @@ public class AiCat {
 		return null;
 	}
 }
-
-

@@ -10,11 +10,18 @@ public class Player {
 	public Player(String name, int type){
 		this.username = name;
 		this.type = type;
-	}
+	} 
 	
+	public String getPlayerName(){
+		return username;
+	}
 	
 	public int getType(){
 		return type;
+	}
+	
+	public int getWinNr(){
+		return winNr;
 	}
 	
 	public int getGameCount(){

@@ -1,5 +1,6 @@
 package com.gamemodule;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,10 +19,10 @@ import com.gamemodule.chatnoir.GameView;
 import com.gamemodule.chatnoir.Player;
 
 
+@SuppressLint("NewApi")
 public class ChatNoirActivity extends Activity implements OnClickListener {
 
-	private final static String TAG = "Main activity";
-    boolean stop = true;
+	private final static String TAG = "chatNoir activity";
     
     private GameView mGameView;
     private Game mGame;
@@ -33,7 +34,7 @@ public class ChatNoirActivity extends Activity implements OnClickListener {
     
     private TextView steps;
     
-    private Handler mRefreshHandler = new Handler(){
+    @SuppressLint("HandlerLeak") private Handler mRefreshHandler = new Handler(){
 
     	public void handleMessage(Message msg) {
     		Log.d(TAG, "refresh action="+ msg.what);
@@ -81,7 +82,8 @@ public class ChatNoirActivity extends Activity implements OnClickListener {
     	
     }
     
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     public void onClick(View v) {
         switch (v.getId()) {
         case R.id.restart_button:
@@ -89,10 +91,12 @@ public class ChatNoirActivity extends Activity implements OnClickListener {
             mGameView.drawGame();
             updateSteps();
             undoNr = 1;
+            undo.setBackground(getResources().getDrawable(R.drawable.bbuton_primary_rounded));
             break;
         case R.id.undo_button:
         	if(undoNr == 1 && rollback()){
         		undoNr = 0;
+        		undo.setBackground(getResources().getDrawable(R.drawable.bbuton_default_rounded));
         	}
             break;
         default:
@@ -110,7 +114,7 @@ public class ChatNoirActivity extends Activity implements OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 mGame.reset();
                 mGameView.drawGame();
-                undoNr = 1;
+                undoNr = 1;// !
             }
         });
         

@@ -31,16 +31,16 @@ import com.gamemodule.R;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
+
 	// for debug
 	private static final String ALSO = "Game view";
-	private static final boolean DEBUG = true;
 
 	private SurfaceHolder myHolder = null;
 
 	private Paint boardPaint = new Paint();
 	private Paint circlePaint = new Paint();
 	private Paint catPaint = new Paint();
-	 private Bitmap bitCat;
+	private Bitmap bitCat;
 	private Paint clear = new Paint(); // clear paint
 
 	private int boardColor = 0;
@@ -55,12 +55,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 	private Context mContext = null;
 
-
 	private Game mGame;
-
-	public int[][] circleArray = null; // these circles are actually stored with
-										// a planar array
-
+	
 	public GameView(Context context) {
 		this(context, null);
 	}
@@ -73,7 +69,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		focus = new Coordinate();
 		init();
 	}
-
+	
 	public void init() {
 		myHolder = this.getHolder();
 		myHolder.addCallback(this);
@@ -177,7 +173,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 				}
 			}
 		}
-
 	}
 
 	public void drawGame() {
@@ -203,10 +198,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		float radius = circleSize / 2;
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
-			focus.y = (int) ((y - startY) / circleSize);
-			focus.x = (int) (x - startX - (focus.y % 2 == 0 ? 0 : radius))
+			focus.y = (int) ((y - startY + circleSize / 2) / circleSize);
+			focus.x = (int) (x - startX  + circleSize /2 - (focus.y % 2 == 0 ? 0 : radius))
 					/ circleSize;
 			break;
+			
 		case MotionEvent.ACTION_UP:
 			int newy = (int) ((y - startY) / circleSize);
 			int newx = (int) (x - startX - (focus.y % 2 == 0 ? 0 : radius))
@@ -271,9 +267,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		super.onLayout(changed, left, top, right, bottom);
 
 		// debug
-		if (DEBUG)
-			Log.d(ALSO, "left=" + left + "  top=" + top + " right=" + right
-					+ " bottom=" + bottom);
 		if (mGame != null) {
 			cBoardWidth = mGame.getBoardWidth();
 			cBoardHeight = mGame.getBoardHeight();

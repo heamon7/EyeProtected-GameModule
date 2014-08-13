@@ -45,6 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/restart_button" 
+            android:background="@drawable/bbuton_primary_rounded"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             >
         </Button>
 
@@ -53,7 +56,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/undo_button" >
+            android:text="@string/undo_button"
+            android:background="@drawable/bbuton_primary_rounded"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            
+             >
         </Button>
     </LinearLayout>
     

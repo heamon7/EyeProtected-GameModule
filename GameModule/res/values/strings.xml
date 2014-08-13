@@ -12,5 +12,11 @@
     <string name="restart_button">Restart</string>
     <string name="undo_button">Undo</string>
     <string name="cnSteps">steps</string>
+    
+    <!-- tacoyaki module -->
+    <string name="taSteps">steps</string>
+    <string name="taTips">Win the game when all circles have the same color. </string>
+    <string name="tacoyaki_de">tacoyaki     </string>
+    <string name="tacoyaki_plus">tacoyaki+</string>
 
 </resources>
